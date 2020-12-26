@@ -1,10 +1,3 @@
-// Exercise 1.7: The function call to io.Copy(dst, src) reads from the src
-// and writes to dst. Use it instead of ioutil.ReadAll to copy the response 
-// body to os.Stdout without requiring a buffer large enough to hold the
-// entire stream. Be sure to check the error result of io.Copy.
-
-// See page 17.
-
 package main
 
 import (
@@ -21,7 +14,7 @@ func main() {
 			fmt.Fprintf(os.Stderr, "fetch: %v\n", err)
 			os.Exit(1)
 		}
-        _, err = io.Copy(os.Stdout, resp.Body)
+		_, err = io.Copy(os.Stdout, resp.Body)
 		resp.Body.Close()
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "fetch: copying %s: %v\n", url, err)

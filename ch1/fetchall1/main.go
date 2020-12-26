@@ -1,10 +1,3 @@
-// Exercise 1.10: Find a web site that produces large amounts of data.
-// Investigate caching by running fetchall twice in succession to see whether
-// the reported time changes much. Do you get the same content each time?
-// Modify fetchallto print its output to a file so it can be examined.
-
-// See page 18.
-
 package main
 
 import (
@@ -17,11 +10,11 @@ import (
 )
 
 func main() {
-    file, err := os.Create("data.txt")
-    if err != nil {
-        fmt.Fprintln(os.Stderr, "fetchall: %v\n", err)
-        os.Exit(1)
-    }
+	file, err := os.Create("data.txt")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "fetchall: %v\n", err)
+		os.Exit(1)
+	}
 
 	start := time.Now()
 	ch := make(chan string)
@@ -29,7 +22,7 @@ func main() {
 		go fetch(url, ch)
 	}
 	for range os.Args[1:] {
-        fmt.Fprintf(file, "%v\n", <-ch)
+		fmt.Fprintf(file, "%v\n", <-ch)
 	}
 	fmt.Printf("%.2fs elapsed\n", time.Since(start).Seconds())
 }
@@ -51,4 +44,3 @@ func fetch(url string, ch chan<- string) {
 	secs := time.Since(start).Seconds()
 	ch <- fmt.Sprintf("%.2fs  %7d  %s", secs, nbytes, url)
 }
-

@@ -1,20 +1,13 @@
-// Exercise 1.5: Change the Lissajous program's color palette to green on
-// black, for added authenticity. To create the web color #RRGGBB use
-// color.RGBA(0xRR, 0xGG, 0xBB, 0xff}, where each pair of hexidecimal digits
-// represents the intensity of the red, green, or blue component of the pixel.
-
-// See page 15.
-
 package main
 
 import (
-    "image"
-    "image/color"
-    "image/gif"
-    "io"
-    "math"
-    "math/rand"
-    "os"
+	"image"
+	"image/color"
+	"image/gif"
+	"io"
+	"math"
+	"math/rand"
+	"os"
 )
 
 var palette = []color.Color{color.Black, color.RGBA{0, 255, 0, 255}}
@@ -58,4 +51,3 @@ func lissajous(out io.Writer) {
 
 	gif.EncodeAll(out, &anim)
 }
-

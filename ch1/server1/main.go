@@ -1,26 +1,17 @@
-// Exercise 1.12: Modify the Lissajous server to read parameter values from
-// the URL. For example, you might arrange it so that a URL like
-// http://localhost:8000/?cycles=20 sets the number of cycles to 20 instead of
-// the default 5. Use the strconv.Atoi function to convert the string
-// parameter into an integer. You can see it's documentation with
-// go doc strconv.Atoi.
-
-// See page 22.
-
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/gif"
 	"io"
+	"log"
 	"math"
 	"math/rand"
-    "net/http"
-    "log"
-    "time"
-    "fmt"
-    "strconv"
+	"net/http"
+	"strconv"
+	"time"
 )
 
 var palette = []color.Color{color.White, color.Black}
@@ -33,23 +24,23 @@ const (
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
-    handler := func(w http.ResponseWriter, r *http.Request) {
-        cyclesParam := r.URL.Query().Get("cycles")
-        if cyclesParam != "" {
-            cycles, err := strconv.ParseFloat(cyclesParam, 64)
-            if err != nil {
-                fmt.Fprintf(w, "%v\n", err)
-                return
-            }
-            lissajous(w, cycles)
-        } else {
-            lissajous(w, 5)
-        }
-    }
-    http.HandleFunc("/", handler)
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		cyclesParam := r.URL.Query().Get("cycles")
+		if cyclesParam != "" {
+			cycles, err := strconv.ParseFloat(cyclesParam, 64)
+			if err != nil {
+				fmt.Fprintf(w, "%v\n", err)
+				return
+			}
+			lissajous(w, cycles)
+		} else {
+			lissajous(w, 5)
+		}
+	}
+	http.HandleFunc("/", handler)
 
-    log.Fatal(http.ListenAndServe("localhost:8000", nil))
-    return
+	log.Fatal(http.ListenAndServe("localhost:8000", nil))
+	return
 }
 
 func lissajous(out io.Writer, cycles float64) {
@@ -77,4 +68,3 @@ func lissajous(out io.Writer, cycles float64) {
 	}
 	gif.EncodeAll(out, &anim)
 }
-

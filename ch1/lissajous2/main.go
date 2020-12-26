@@ -1,26 +1,20 @@
-// Exercise 1.6 Modify the Lissajous program to produce images in multiple
-// colors by adding more values to palette and then displaying them by
-// changing the third argument of Set-ColorIndex in some interesting way.
-
-// See page 15.
-
 package main
 
 import (
-    "image"
-    "image/color"
-    "image/gif"
-    "io"
-    "math"
-    "math/rand"
-    "os"
+	"image"
+	"image/color"
+	"image/gif"
+	"io"
+	"math"
+	"math/rand"
+	"os"
 )
 
 var palette = []color.Color{
-    color.Black,
-    color.RGBA{0, 255, 0, 255},
-    color.RGBA{255, 0, 0, 255},
-    color.RGBA{0, 0, 255, 255},
+	color.Black,
+	color.RGBA{0, 255, 0, 255},
+	color.RGBA{255, 0, 0, 255},
+	color.RGBA{0, 0, 255, 255},
 }
 
 func main() {
@@ -46,9 +40,9 @@ func lissajous(out io.Writer) {
 		for t := 0.0; t < cycles*2*math.Pi; t += res {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
-            index := rand.Intn(len(palette) - 1) + 1
+			index := rand.Intn(len(palette)-1) + 1
 			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5),
-                uint8(index))
+				uint8(index))
 		}
 
 		phase += 0.1
@@ -58,4 +52,3 @@ func lissajous(out io.Writer) {
 
 	gif.EncodeAll(out, &anim)
 }
-
